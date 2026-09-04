@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVP Motors | Premium Cars</title>
+    <style>
+        /* CSS: Styling the website */
+        :root {
+            --primary: #e74c3c;
+            --dark: #2c3e50;
+            --light: #f4f4f4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--dark);
+            color: black;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 { margin: 0; font-size: 1.5rem; }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a { color: black; text-decoration: none; font-weight: bold; }
+        nav a:hover { color: var(--primary); }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            text-align: center;
+        }
+
+        .hero h2 { font-size: 3rem; margin-bottom: 10px; }
+        
+        .btn {
+            background-color: var(--primary);
+            color: black;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover { background-color: #c0392b; }
+
+        /* Car Grid */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .car-card {
+            background: black;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .car-card:hover { transform: translateY(-5px); }
+
+        .car-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .car-info { padding: 1.5rem; }
+        .car-price { color: var(--primary); font-size: 1.25rem; font-weight: bold; }
+        .car-details { font-size: 0.9rem; color: #666; margin: 10px 0; }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <h1>NVP Motors</h1>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#inventory">Inventory</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h2>Find Your Dream Car</h2>
+        <p>Premium vehicles at unbeatable prices.</p>
+        <br>
+        <a href="#inventory" class="btn">View Inventory</a>
+    </div>
+
+    <!-- Inventory Section -->
+    <div class="container" id="inventory">
+        <h2 class="section-title">Latest Arrivals</h2>
+        <div class="car-grid" id="car-list">
+            <!-- Cars will be injected here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="container" id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <p>Ready to drive home? Call us at <strong>555-0123</strong> or visit our showroom.</p>
+            <br>
+            <button class="btn" onclick="alert('Thank you! A representative will contact you shortly.')">Schedule a Test Drive</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 NVP Motors. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript: Dynamic Content
+        const cars = [
+            {
+                name: "Sport GT 2025",
+                price: "$45,000",
+                image: "https://images.unsplash.com/photo-1503376763036-066120622c74?auto=format&fit=crop&w=500&q=60",
+                specs: "0-60 in 3.2s | 320 HP"
+            },
+            {
+                name: "Luxury Sedan X",
+                price: "$38,500",
+                image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=500&q=60",
+                specs: "Leather Interior | Sunroof"
+            },
+            {
+                name: "Electric Future E",
+                price: "$52,000",
+                image: "https://images.unsplash.com/photo-1593055375925-5e0584737881?auto=format&fit=crop&w=500&q=60",
+                specs: "300mi Range | Autopilot"
+            }
+        ];
+
+        const carContainer = document.getElementById('car-list');
+
+        // Loop through the data and create HTML for each car
+        cars.forEach(car => {
+            const card = document.createElement('div');
+            card.className = 'car-card';
+            card.innerHTML = `
+                <img src="${car.image}" alt="${car.name}">
+                <div class="car-info">
+                    <h3>${car.name}</h3>
+                    <p class="car-details">${car.specs}</p>
+                    <p class="car-price">${car.price}</p>
+                    <button class="btn" style="width:100%" onclick="selectCar('${car.name}')">Details</button>
+                </div>
+            `;
+            carContainer.appendChild(card);
+        });
+
+        function selectCar(model) {
+            alert(`You are interested in the ${model}. Check our contact info to book a viewing!`);
+        }
+    </script>
+</body>
+</html>
