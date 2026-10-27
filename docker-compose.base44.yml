@@ -1,0 +1,32 @@
+# Base44 sandbox environment for NVP Motors.
+#
+# The app is a single static index.html with no build step and no backend, so the
+# repo is bind-mounted read-only and served directly from the cloned source:
+# editing index.html (or adding css/js/images) shows up on the next refresh.
+# docker/serve.py is a tiny static server: it runs as root so it can read the
+# mounted repo root, hides dotfiles (.git, .base44) and disables caching.
+services:
+  web:
+    image: python:3.12-slim
+    restart: on-failure
+    labels:
+      base44.project: "NVP Motors"
+      base44.kind: "web"
+      base44.port: "3000"
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app:ro
+    command: ["python", "-u", "/app/docker/serve.py"]
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import sys, urllib.request; sys.exit(0 if b'NVP Motors' in urllib.request.urlopen('http://127.0.0.1:3000/', timeout=3).read() else 1)",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
